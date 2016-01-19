@@ -1,0 +1,23 @@
+package me.soldier.math;
+
+/**
+ * Created by Thomas on 19 janv. 2016
+ */
+public class ViewMatrix extends Matrix4f
+{
+
+	public ViewMatrix()
+	{
+		Identity();
+	}
+
+	public void Transform(Vector3f position, Vector3f angle)
+	{
+		this.Identity();
+		position = new Vector3f(-position.x, -position.y, -position.z);
+		this.multiply(rotate(-angle.y, 0, 1, 0));
+		this.multiply(rotate(-angle.x, 1, 0, 0));
+		this.multiply(rotate(-angle.z, 0, 0, 1));
+		this.translate(position);
+	}
+}
