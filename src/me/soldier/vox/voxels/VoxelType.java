@@ -5,5 +5,5 @@ package me.soldier.vox.voxels;
  */
 public enum VoxelType
 {
-
+	GRASS, STONE, AIR;
 }

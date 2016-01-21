@@ -49,11 +49,11 @@ public class Camera {
 	}
 	
 	public void Up(float distance) {
-		position.y -= distance;
+		position.y += distance;
 	}
 	
 	public void Down(float distance) {
-		position.y += distance;
+		position.y -= distance;
 	}
 	
 	public void lookThrough() {

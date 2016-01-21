@@ -5,6 +5,7 @@ package me.soldier.vox.voxels;
  */
 public class VoxelFace
 {
+	//Reserved for optimization
 	public static final short NORTH = 0xAA;
 	public static final short SOUTH = 0xAB;
 	public static final short WEST = 0xAC;
@@ -12,9 +13,20 @@ public class VoxelFace
 	public static final short TOP = 0xAE;
 	public static final short BOTTOM = 0xAF;
 	
-	@Override
-	public boolean equals(Object obj)
+	private boolean visible;
+	
+	public VoxelFace(short type)
 	{
-		return super.equals(obj);
+		
+	}
+
+	public boolean isVisible()
+	{
+		return true;
+	}
+
+	public void setVisible(boolean visible)
+	{
+		this.visible = visible;
 	}
 }
