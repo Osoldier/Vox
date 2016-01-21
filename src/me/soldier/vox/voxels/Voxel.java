@@ -19,9 +19,6 @@ public class Voxel
 
 	public Voxel(VoxelType type)
 	{
-		for(int i = 0; i < 6;i++) {
-			faces[i] = new VoxelFace(VoxelFace.NORTH);
-		}
 		this.type = type;
 		setOpaque(type != VoxelType.AIR);
 	}

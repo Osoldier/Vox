@@ -12,6 +12,7 @@ uniform mat4 ml_mat, vw_mat, pr_mat;
 
 void main()
 {
-  gl_Position = vec4(vertex, 1.0) * ml_mat * vw_mat * pr_mat;
+  vec4 position = vec4(vertex, 1.0) * ml_mat;
+	gl_Position = position * vw_mat* pr_mat;
   toFrag.texCoord = texcoord;
 }

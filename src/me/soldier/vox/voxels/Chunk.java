@@ -11,7 +11,7 @@ import me.soldier.util.Mesher;
  */
 public class Chunk
 {
-	public static final int CHUNK_SIZE = 8;
+	public static final int CHUNK_SIZE = 16;
 	private Voxel[][][] voxels = new Voxel[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
 	private List<Model> meshes = new LinkedList<Model>();
 
@@ -23,38 +23,16 @@ public class Chunk
 			{
 				for (int z = 0; z < voxels[x][y].length; z++)
 				{
-
-					if (Math.random() > 0.8)
-					{
-						voxels[x][y][z] = new Voxel(VoxelType.STONE);
-					} else
+					if(Math.random() > 0.9)
 					{
 						voxels[x][y][z] = new Voxel(VoxelType.GRASS);
+					} else {
+						voxels[x][y][z] = new Voxel(VoxelType.STONE);
 					}
 				}
 			}
 		}
-		cull();
 		Mesher.Greedy(this, meshes);
-	}
-	
-	public void cull() {
-		for (int x = 0; x < voxels.length; x++)
-		{
-			for (int y = 0; y < voxels[x].length; y++)
-			{
-				for (int z = 0; z < voxels[x][y].length; z++)
-				{
-					if(x > 0 && x+1 < voxels.length) {
-						if(y > 0 && y+1 < voxels.length) {
-							if(z > 0 && z+1 < voxels.length) {
-								voxels[x][y][z].setVisible(false);
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 
 	public Voxel getAt(int x, int y, int z)

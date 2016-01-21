@@ -25,7 +25,7 @@ public class Engine
 	{
 		renderer = new Renderer(Main.pix_width, Main.pix_height);
 		pov = new Camera(0, 0, 400);
-		world = new World(4, 2, 4);
+		world = new World(2, 1, 2);
 	}
 
 	public void Render()

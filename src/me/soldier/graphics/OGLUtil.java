@@ -8,8 +8,6 @@ import static org.lwjgl.opengl.GL30.*;
 import java.nio.*;
 import java.util.*;
 
-import org.lwjgl.BufferUtils;
-
 /**
  * Created by Thomas on 19 janv. 2016
  */

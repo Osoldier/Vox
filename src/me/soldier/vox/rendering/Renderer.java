@@ -9,7 +9,7 @@ import me.soldier.vox.voxels.World;
  */
 public class Renderer
 {
-	private final float fov = 70f, znear = 0.1f, zfar = 1000f;
+	private final float fov = 70f, znear = 0.1f, zfar = 10000f;
 	private ProjectionMatrix perspective, orthographic;
 	private VoxelRenderer voxelRenderer;
 
@@ -33,6 +33,7 @@ public class Renderer
 				}
 			}
 		}
+		voxelRenderer.Clean();
 	}
 
 }

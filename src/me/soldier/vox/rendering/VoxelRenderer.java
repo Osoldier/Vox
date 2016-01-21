@@ -31,13 +31,17 @@ public class VoxelRenderer
 		shader.setVwMat(pov);
 		shader.setPrMat(proj);
 		shader.loadFrameUniforms();
+		shader.start();
 	}
 
+	private Vector3f position = new Vector3f();
 	public void Render(Chunk c, int x, int y, int z)
 	{
-		shader.getMlMat().Transform(new Vector3f(x * CHUNK_SIZE * VOXEL_SIZE, y * CHUNK_SIZE * VOXEL_SIZE, z * CHUNK_SIZE * VOXEL_SIZE), 0, 0, 0, Vector3f.oneVec);
+		position.x = x * CHUNK_SIZE * VOXEL_SIZE;
+		position.y = y * CHUNK_SIZE * VOXEL_SIZE;
+		position.z = z * CHUNK_SIZE * VOXEL_SIZE;
+		shader.getMlMat().Transform(position, 0, 0, 0, Vector3f.oneVec);
 		shader.loadUniforms();
-		shader.start();
 		for (Model m : c.getMeshes())
 		{
 			glBindVertexArray(m.getVaoID());
@@ -50,6 +54,9 @@ public class VoxelRenderer
 			glDisableVertexAttribArray(2);
 			glBindVertexArray(0);
 		}
+	}
+	
+	public void Clean() {
 		shader.stop();
 	}
 }

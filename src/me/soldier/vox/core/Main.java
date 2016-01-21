@@ -46,10 +46,9 @@ public class Main
 			return;
 		}
 
-		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-		glfwWindowHint(GLFW_SAMPLES, 1);
+		glfwWindowHint(GLFW_SAMPLES, 4);
 		OSCompatibility.GLFWSpecifics();
-		window = glfwCreateWindow(width, height, "HeS", NULL, NULL);
+		window = glfwCreateWindow(width, height, "Voxel Engine", NULL, NULL);
 		if (window == NULL)
 		{
 			System.err.println("Could not create GLFW window!");
@@ -119,16 +118,10 @@ public class Main
 		glfwSwapBuffers(window);
 	}
 
-	public static float mouseX, mouseY;
-	private DoubleBuffer mx = BufferUtils.createDoubleBuffer(1), my = BufferUtils.createDoubleBuffer(1);
-
 	private void update()
 	{
 		game.Update();
 		glfwPollEvents();
-		glfwGetCursorPos(window, mx, my);
-		mouseX = (float) mx.get(0);
-		mouseY = (float) my.get(0);
 	}
 
 	private void InitGL()
@@ -136,6 +129,7 @@ public class Main
 		GL.createCapabilities();
 		System.out.println("OpenGL: " + glGetString(GL_VERSION));
 		glEnable(GL13.GL_MULTISAMPLE);
+		glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, pix_width, pix_height);
 	}
 
