@@ -114,7 +114,7 @@ public class Main
 		game.Render();
 		int error = glGetError();
 		if (error != GL_NO_ERROR)
-			System.out.println("Error " + error);
+			System.out.println("Error: " + GLUtil.getErrorString(error));
 		glfwSwapBuffers(window);
 	}
 

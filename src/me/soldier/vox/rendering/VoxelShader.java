@@ -1,9 +1,7 @@
 package me.soldier.vox.rendering;
 
-import me.soldier.graphics.Shader;
-import me.soldier.math.ModelMatrix;
-import me.soldier.math.ProjectionMatrix;
-import me.soldier.math.ViewMatrix;
+import me.soldier.graphics.*;
+import me.soldier.math.*;
 
 /**
  * Created by Thomas on 21 janv. 2016
@@ -11,22 +9,26 @@ import me.soldier.math.ViewMatrix;
 public class VoxelShader extends Shader
 {
 	private static final String VERT_FILE = "src/res/shaders/voxel.vert";
+	private static final String GEO_FILE = "src/res/shaders/voxel.geo";
 	private static final String FRAG_FILE = "src/res/shaders/voxel.frag";
 	
 	//Uniform locations
-	private int vwMatLoc, prMatLoc, mlMatLoc;
+	private int vwMatLoc, prMatLoc, mlMatLoc, lightLoc;
 	//Uniform variables
 	private ProjectionMatrix prMat;
 	private ViewMatrix vwMat;
 	private ModelMatrix mlMat;
+	private Vector3f currentColor;
+	private Light sun;
 	
 	public VoxelShader()
 	{
-		super(VERT_FILE, FRAG_FILE);
+		super(VERT_FILE, FRAG_FILE, GEO_FILE);
 		this.mlMat = new ModelMatrix();
 		this.vwMatLoc = this.getUniformLocation("vw_mat");
 		this.prMatLoc = this.getUniformLocation("pr_mat");
 		this.mlMatLoc = this.getUniformLocation("ml_mat");
+		this.lightLoc = this.getUniformLocation("lightPos");
 	}
 
 	public void loadUniforms()
@@ -38,6 +40,7 @@ public class VoxelShader extends Shader
 	{
 		this.setUniform(vwMatLoc, vwMat);
 		this.setUniform(prMatLoc, prMat);
+		this.setUniform(lightLoc, sun.getPosition());
 	}
 
 	public ProjectionMatrix getPrMat()
@@ -68,6 +71,26 @@ public class VoxelShader extends Shader
 	public void setMlMat(ModelMatrix mlMat)
 	{
 		this.mlMat = mlMat;
+	}
+
+	public Vector3f getCurrentColor()
+	{
+		return currentColor;
+	}
+
+	public void setCurrentColor(Vector3f currentColor)
+	{
+		this.currentColor = currentColor;
+	}
+
+	public Light getSun()
+	{
+		return sun;
+	}
+
+	public void setSun(Light sun)
+	{
+		this.sun = sun;
 	}
 
 }

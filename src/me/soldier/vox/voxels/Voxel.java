@@ -1,5 +1,7 @@
 package me.soldier.vox.voxels;
 
+import me.soldier.math.*;
+
 /**
  * Created by Thomas on 19 janv. 2016
  */
@@ -8,29 +10,22 @@ public class Voxel
 	public static final int VOXEL_SIZE = 16;
 	private VoxelType type;
 	private boolean visible = true, opaque = true;
-	
-	//Reserved for further use
-	private VoxelFace[] faces = new VoxelFace[6];
+	private Vector3f color;
 	
 	public Voxel()
 	{
-		this(VoxelType.GRASS);
+		this(VoxelType.AIR);
 	}
 
 	public Voxel(VoxelType type)
 	{
-		this.type = type;
-		setOpaque(type != VoxelType.AIR);
+		this.setType(type);
 	}
 	
 	public boolean canBeMerged(Voxel v) {
 		return this.type == v.type || !v.isVisible() || !this.isVisible();
 	}
 	
-	public VoxelFace getFace(short face) {
-		return faces[face-VoxelFace.NORTH];
-	}
-
 	public VoxelType getType()
 	{
 		return type;
@@ -39,6 +34,8 @@ public class Voxel
 	public void setType(VoxelType type)
 	{
 		this.type = type;
+		setOpaque(type != VoxelType.AIR);
+		this.setColor(type.getColor());
 	}
 
 	public boolean isVisible()
@@ -59,5 +56,15 @@ public class Voxel
 	public void setOpaque(boolean opaque)
 	{
 		this.opaque = opaque;
+	}
+
+	public Vector3f getColor()
+	{
+		return color;
+	}
+
+	public void setColor(Vector3f color)
+	{
+		this.color = color;
 	}
 }

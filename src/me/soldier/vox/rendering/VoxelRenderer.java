@@ -1,16 +1,12 @@
 package me.soldier.vox.rendering;
 
-import static me.soldier.vox.voxels.Chunk.CHUNK_SIZE;
-import static me.soldier.vox.voxels.Voxel.VOXEL_SIZE;
+import static me.soldier.vox.voxels.Chunk.*;
+import static me.soldier.vox.voxels.Voxel.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-
-import me.soldier.graphics.Model;
-import me.soldier.math.ProjectionMatrix;
-import me.soldier.math.Vector3f;
-import me.soldier.math.ViewMatrix;
-import me.soldier.vox.voxels.Chunk;
+import static org.lwjgl.opengl.GL30.*;
+import me.soldier.math.*;
+import me.soldier.vox.voxels.*;
 
 /**
  * Created by Thomas on 21 janv. 2016
@@ -24,10 +20,12 @@ public class VoxelRenderer
 		shader = new VoxelShader();
 	}
 
-	public void Prepare(ViewMatrix pov, ProjectionMatrix proj)
+	public void Prepare(World w, ViewMatrix pov, ProjectionMatrix proj)
 	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glEnable(GL_CULL_FACE);
 		// Set shader variables
+		shader.setSun(w.getSun());
 		shader.setVwMat(pov);
 		shader.setPrMat(proj);
 		shader.loadFrameUniforms();
@@ -35,28 +33,26 @@ public class VoxelRenderer
 	}
 
 	private Vector3f position = new Vector3f();
-	public void Render(Chunk c, int x, int y, int z)
+
+	public void Render(Chunk c, int x, int z)
 	{
 		position.x = x * CHUNK_SIZE * VOXEL_SIZE;
-		position.y = y * CHUNK_SIZE * VOXEL_SIZE;
 		position.z = z * CHUNK_SIZE * VOXEL_SIZE;
 		shader.getMlMat().Transform(position, 0, 0, 0, Vector3f.oneVec);
 		shader.loadUniforms();
-		for (Model m : c.getMeshes())
-		{
-			glBindVertexArray(m.getVaoID());
-			glEnableVertexAttribArray(0);
-			glEnableVertexAttribArray(1);
-			glEnableVertexAttribArray(2);
-			glDrawElements(GL_TRIANGLES, m.getVertexCount(), GL_UNSIGNED_INT, 0);
-			glDisableVertexAttribArray(0);
-			glDisableVertexAttribArray(1);
-			glDisableVertexAttribArray(2);
-			glBindVertexArray(0);
-		}
+		glBindVertexArray(c.getMesh().getVaoID());
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
+		glDrawElements(GL_TRIANGLES, c.getMesh().getVertexCount(), GL_UNSIGNED_INT, 0);
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		glDisableVertexAttribArray(2);
+		glBindVertexArray(0);
 	}
-	
-	public void Clean() {
+
+	public void Clean()
+	{
 		shader.stop();
 	}
 }

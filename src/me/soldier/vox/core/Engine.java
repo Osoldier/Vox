@@ -25,7 +25,7 @@ public class Engine
 	{
 		renderer = new Renderer(Main.pix_width, Main.pix_height);
 		pov = new Camera(0, 0, 400);
-		world = new World(2, 1, 2);
+		world = new World(15, 15);
 	}
 
 	public void Render()
@@ -69,7 +69,6 @@ public class Engine
 
 		if (MouseHandler.isButtonDown(0))
 		{
-
 			newX = x.get(0);
 			newY = y.get(0);
 

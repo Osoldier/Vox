@@ -2,11 +2,16 @@
 
 out vec4 color;
 
-in FragInfo {
-  vec2 texCoord;
+in fData
+{
+  vec3 normal;
+  vec3 color;
+  vec3 vertToLight;
 } fragInfo;
 
 void main()
 {
-  color = vec4(1.0);
+  float cosine = dot(normalize(fragInfo.normal), normalize(fragInfo.vertToLight));
+  color = vec4(fragInfo.color,1.0);
+  color *= max(cosine, 0.2);
 }

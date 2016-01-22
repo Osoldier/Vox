@@ -22,15 +22,12 @@ public class Renderer
 
 	public void RenderScene(World w, Camera pov)
 	{
-		voxelRenderer.Prepare(pov.vw_matrix, perspective);
+		voxelRenderer.Prepare(w, pov.vw_matrix, perspective);
 		for (int x = 0; x < w.getChunks().length; x++)
 		{
-			for (int y = 0; y < w.getChunks()[x].length; y++)
+			for (int z = 0; z < w.getChunks()[x].length; z++)
 			{
-				for (int z = 0; z < w.getChunks()[x][y].length; z++)
-				{
-					voxelRenderer.Render(w.getChunks()[x][y][z], x, y, z);
-				}
+				voxelRenderer.Render(w.getChunks()[x][z], x, z);
 			}
 		}
 		voxelRenderer.Clean();

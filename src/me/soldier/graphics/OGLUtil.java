@@ -14,12 +14,12 @@ import java.util.*;
 public class OGLUtil
 {
 
-	public static Model createMeshVAO(float[] pos, float[] normals, float[] tex, int[] indices)
+	public static Model createMeshVAO(float[] pos, float[] normals, float[] color, int[] indices)
 	{
 		int vaoID = generateVAO();
 		setAttributeData(0, 3, pos);
 		setAttributeData(1, 3, normals);
-		setAttributeData(2, 2, tex);
+		setAttributeData(2, 3, color);
 		setIndicesData(indices);
 		releaseVAO();
 		return new Model(vaoID, indices.length);
