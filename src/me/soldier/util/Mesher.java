@@ -1,13 +1,11 @@
 package me.soldier.util;
 
-import static me.soldier.vox.voxels.Chunk.CHUNK_SIZE;
-import static me.soldier.vox.voxels.Voxel.VOXEL_SIZE;
+import static me.soldier.vox.voxels.Voxel.*;
 
 import java.util.*;
 
-import me.soldier.graphics.Model;
-import me.soldier.graphics.OGLUtil;
-import me.soldier.math.Vector3f;
+import me.soldier.graphics.*;
+import me.soldier.math.*;
 import me.soldier.vox.voxels.*;
 
 /**
@@ -36,12 +34,11 @@ public abstract class Mesher
 		int[] xOffset = new int[3];
 		int[] yOffset = new int[3];
 		int u, v;
-		
+
 		List<float[]> floatdata = new LinkedList<float[]>();
 		List<int[]> indices = new LinkedList<int[]>();
-		
-		// we'll iterate once per direction (6 times)
-		Voxel[] mask = new Voxel[Chunk.CHUNK_SIZE * World.WORLD_HEIGHT];
+		int[] dimentions = new int[]{Chunk.CHUNK_SIZE, World.WORLD_HEIGHT, Chunk.CHUNK_SIZE};
+		Voxel[] mask;
 		// the mask index
 		int n;
 		// Buffer variables
@@ -61,18 +58,19 @@ public abstract class Mesher
 				position[d] = -1;
 				u = (d + 1) % 3;
 				v = (d + 2) % 3;
+				// we'll iterate once per direction (6 times)
+				mask = new Voxel[dimentions[u] * dimentions[v]];
 
-				while (position[d] < CHUNK_SIZE)
+				while (position[d] < dimentions[d])
 				{
 					n = 0;
-
-					for (position[v] = 0; position[v] < CHUNK_SIZE; position[v]++)
+					for (position[v] = 0; position[v] < dimentions[v]; position[v]++)
 					{
-						for (position[u] = 0; position[u] < CHUNK_SIZE; position[u]++)
+						for (position[u] = 0; position[u] < dimentions[u]; position[u]++)
 						{
 							tmp1 = (position[d] >= 0) ? c.getAt(position[0], position[1], position[2]) : null;
 
-							tmp2 = (position[d] < CHUNK_SIZE - 1) ? c.getAt(position[0] + offset[0], position[1] + offset[1], position[2] + offset[2]) : null;
+							tmp2 = (position[d] < dimentions[d] - 1) ? c.getAt(position[0] + offset[0], position[1] + offset[1], position[2] + offset[2]) : null;
 							// if the two voxels can be merged, we add null to
 							// the mesh mask otherwise we add the actual voxel.
 							mask[n++] = (tmp1 != null && tmp2 != null && tmp1.canBeMerged(tmp2)) ? null : (back ? tmp1 : tmp2);
@@ -82,26 +80,26 @@ public abstract class Mesher
 					position[d]++;
 					n = 0;
 
-					for (int j = 0; j < World.WORLD_HEIGHT; j++)
+					for (int j = 0; j < dimentions[v]; j++)
 					{
 						int i = 0;
-						while (i < CHUNK_SIZE)
+						while (i < dimentions[u])
 						{
 							if (mask[n] != null)
 							{
-								for (width = 1; (i + width) < CHUNK_SIZE && mask[n + width] != null && mask[n + width].canBeMerged(mask[n]); width++)
+								for (width = 1; (i + width) < dimentions[u] && mask[n + width] != null && mask[n + width].canBeMerged(mask[n]); width++)
 								{
 									// No code, the point of this loop is to get
 									// the right width value for the mesh
 								}
 
-								outerloop: for (height = 1; j + height < World.WORLD_HEIGHT; height++)
+								outerloop: for (height = 1; j + height < dimentions[v]; height++)
 								{
 									for (int k = 0; k < width; k++)
 									{
 										// calculate the right height value for
 										// the given width
-										if (mask[n + k + height * CHUNK_SIZE] == null || !(mask[n + k + height * CHUNK_SIZE].canBeMerged(mask[n])))
+										if (mask[n + k + height * dimentions[u]] == null || !(mask[n + k + height * dimentions[u]].canBeMerged(mask[n])))
 										{
 											break outerloop;
 										}
@@ -135,7 +133,7 @@ public abstract class Mesher
 								{
 									for (int k = 0; k < width; k++)
 									{
-										mask[n + k + l * CHUNK_SIZE] = null;
+										mask[n + k + l *dimentions[u]] = null;
 									}
 								}
 								// go to the next "line"
@@ -154,33 +152,35 @@ public abstract class Mesher
 			back = back & b;
 			b = !b;
 		}
-		float[] vertices = new float[floatdata.size()*12/2];
-		float[] colors = new float[floatdata.size()*12/2];
-		int[] finalIndices = new int[indices.size()*6];
-		
+		float[] vertices = new float[floatdata.size() * 12 / 2];
+		float[] colors = new float[floatdata.size() * 12 / 2];
+		int[] finalIndices = new int[indices.size() * 6];
+
 		for (int k = 0; k < floatdata.size(); k++)
 		{
-			if(k % 2 == 0) {
+			if (k % 2 == 0)
+			{
 				for (int i = 0; i < floatdata.get(k).length; i++)
 				{
-					vertices[k/2*12+i] = floatdata.get(k)[i];
+					vertices[k / 2 * 12 + i] = floatdata.get(k)[i];
 				}
-			} else {
+			} else
+			{
 				for (int i = 0; i < floatdata.get(k).length; i++)
 				{
-					colors[k/2*12+i] = floatdata.get(k)[i];
+					colors[k / 2 * 12 + i] = floatdata.get(k)[i];
 				}
 			}
 		}
-		
+
 		for (int j = 0; j < indices.size(); j++)
 		{
-			finalIndices[j*6] = indices.get(j)[0];
-			finalIndices[j*6+1] = indices.get(j)[1];
-			finalIndices[j*6+2] = indices.get(j)[2];
-			finalIndices[j*6+3] = indices.get(j)[3];
-			finalIndices[j*6+4] = indices.get(j)[4];
-			finalIndices[j*6+5] = indices.get(j)[5];
+			finalIndices[j * 6] = indices.get(j)[0];
+			finalIndices[j * 6 + 1] = indices.get(j)[1];
+			finalIndices[j * 6 + 2] = indices.get(j)[2];
+			finalIndices[j * 6 + 3] = indices.get(j)[3];
+			finalIndices[j * 6 + 4] = indices.get(j)[4];
+			finalIndices[j * 6 + 5] = indices.get(j)[5];
 		}
 		return OGLUtil.createMeshVAO(vertices, vertices, colors, finalIndices);
 	}
@@ -197,11 +197,11 @@ public abstract class Mesher
 		// the indices order changes if the voxel is looking backward, so
 		// culling don't discard it
 		int os = 4 * ind.size();
-		int[] indices = (!back ? new int[] { 2+os, 0+os, 1+os, 1+os, 3+os, 2+os } : new int[] { 2+os, 3+os, 1+os, 1+os, 0+os, 2+os });
+		int[] indices = (!back ? new int[] { 2 + os, 0 + os, 1 + os, 1 + os, 3 + os, 2 + os } : new int[] { 2 + os, 3 + os, 1 + os, 1 + os, 0 + os, 2 + os });
 		floatdata.add(positions);
-		floatdata.add(new float[] { 
-				color.x, color.y, color.z, 
-				color.x, color.y, color.z, 
+		floatdata.add(new float[] {
+				color.x, color.y, color.z,
+				color.x, color.y, color.z,
 				color.x, color.y, color.z,
 				color.x, color.y, color.z });
 		ind.add(indices);

@@ -18,11 +18,10 @@ public class World
 	{
 		this.w = w;
 		this.d = d;
-		//double[] noiseMap = Noise.perlinNoise(closestPot(w*Chunk.CHUNK_SIZE), closestPot(d*Chunk.CHUNK_SIZE), 2);
-		double[] noiseMap = Noise.perlinNoise(256, 256, 20);
+		double[] noiseMap = Noise.perlinNoise(w*Chunk.CHUNK_SIZE, d*Chunk.CHUNK_SIZE, 10);
 		chunks = new Chunk[w][d];
 		long time = System.currentTimeMillis();
-		setSun(new Light(new Vector3f(0, 1000, 0), Vector3f.oneVec));
+		setSun(new Light(new Vector3f(0, 4096, 0), Vector3f.oneVec));
 		for (int x = 0; x < w; x++)
 		{
 			for (int z = 0; z < d; z++)
@@ -32,31 +31,6 @@ public class World
 			}
 		}
 		System.out.println(System.currentTimeMillis() - time);
-		CheckVisibility();
-	}
-
-	public void CheckVisibility()
-	{
-		for (int x = 0; x < w; x++)
-		{
-			for (int z = 0; z < d; z++)
-			{
-
-			}
-		}
-	}
-	
-	private int closestPot(int x)
-	{
-	    if (x < 0)
-	        return 0;
-	    --x;
-	    x |= x >> 1;
-	    x |= x >> 2;
-	    x |= x >> 4;
-	    x |= x >> 8;
-	    x |= x >> 16;
-	    return x+1;
 	}
 
 	public Chunk[][] getChunks()

@@ -33,4 +33,24 @@ public class Renderer
 		voxelRenderer.Clean();
 	}
 
+	public ProjectionMatrix getPerspective()
+	{
+		return perspective;
+	}
+
+	public void setPerspective(ProjectionMatrix perspective)
+	{
+		this.perspective = perspective;
+	}
+
+	public ProjectionMatrix getOrthographic()
+	{
+		return orthographic;
+	}
+
+	public void setOrthographic(ProjectionMatrix orthographic)
+	{
+		this.orthographic = orthographic;
+	}
+
 }

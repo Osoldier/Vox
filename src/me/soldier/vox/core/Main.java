@@ -29,7 +29,7 @@ public class Main
 	private GLFWWindowSizeCallback sizeCallback;
 	private GLFWMouseButtonCallback mouseCallback;
 
-	private Engine game;
+	private Engine engine;
 
 	public void start()
 	{
@@ -67,7 +67,7 @@ public class Main
 	public void run()
 	{
 		init();
-		game = new Engine();
+		engine = new Engine();
 
 		long lastTime = System.nanoTime();
 		double delta = 0.0;
@@ -111,7 +111,7 @@ public class Main
 	private void render()
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		game.Render();
+		engine.Render();
 		int error = glGetError();
 		if (error != GL_NO_ERROR)
 			System.out.println("Error: " + GLUtil.getErrorString(error));
@@ -120,7 +120,7 @@ public class Main
 
 	private void update()
 	{
-		game.Update();
+		engine.Update();
 		glfwPollEvents();
 	}
 

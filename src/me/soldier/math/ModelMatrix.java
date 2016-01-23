@@ -15,9 +15,12 @@ public class ModelMatrix extends Matrix4f
 	{
 		this.Identity();
 		this.translate(position);
-		this.Rotate(anglex, 1, 0, 0);
-		this.Rotate(angley, 0, 1, 0);
-		this.Rotate(anglez, 0, 0, 1);
+		if (anglex != 0)
+			this.Rotate(anglex, 1, 0, 0);
+		if (angley != 0)
+			this.Rotate(angley, 0, 1, 0);
+		if (anglez != 0)
+			this.Rotate(anglez, 0, 0, 1);
 		this.Scale(scale);
 	}
 

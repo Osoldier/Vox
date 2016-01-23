@@ -28,11 +28,12 @@ public class Chunk
 
 	public void generateFloor(double[] noiseMap, int i, int j)
 	{
+		int sq = (int) Math.sqrt(noiseMap.length);
 		for (int x = 0; x < voxels.length; x++)
 		{
 			for (int z = 0; z < voxels[x][0].length; z++)
 			{
-				int y = (int) ((noiseMap[(x+i) * 256 + (z+j)] + 1) * 10);
+				int y = (int) ((noiseMap[(x+i) * sq + (z+j)] + 1) * 10);
 				if (y < 0)
 					y = 0;
 				if(y >= World.WORLD_HEIGHT) y = World.WORLD_HEIGHT-1;

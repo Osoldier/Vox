@@ -6,6 +6,7 @@ import java.nio.DoubleBuffer;
 
 import org.lwjgl.BufferUtils;
 
+import me.soldier.math.*;
 import me.soldier.util.RayCaster;
 import me.soldier.vox.rendering.Renderer;
 import me.soldier.vox.voxels.World;
@@ -24,8 +25,9 @@ public class Engine
 	public Engine()
 	{
 		renderer = new Renderer(Main.pix_width, Main.pix_height);
-		pov = new Camera(0, 0, 400);
-		world = new World(15, 15);
+		pov = new Camera(1920, 200, 1920);
+		world = new World(25, 25);
+		this.rayCaster = new RayCaster(renderer.getPerspective(), pov.vw_matrix);
 	}
 
 	public void Render()
@@ -42,9 +44,10 @@ public class Engine
 	public void Update()
 	{
 		glfwGetCursorPos(Main.window, x, y);
+		rayCaster.Cast((float) x.get(0), (float) y.get(0));
 		if (Input.isKeyDown(GLFW_KEY_W))
 		{
-			pov.Forward(speed );
+			pov.Forward(speed);
 		}
 		if (Input.isKeyDown(GLFW_KEY_S))
 		{
