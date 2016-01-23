@@ -1,5 +1,8 @@
 package me.soldier.util;
 
+/**
+ * Created by Thomas on 23 janv. 2016
+ */
 public class Noise
 {
 	public static double[] perlinNoise(int width, int height, double exponent)

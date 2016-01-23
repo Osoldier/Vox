@@ -1,5 +1,8 @@
 package me.soldier.graphics;
 
+/**
+ * Created by Thomas on 19 janv. 2016
+ */
 public class Model
 {
 	private int vaoID, vertexCount;

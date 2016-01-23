@@ -3,6 +3,9 @@ package me.soldier.vox.core;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
+/**
+ * Created by Thomas on 19 janv. 2016
+ */
 public class MouseHandler extends GLFWMouseButtonCallback {
 
 	private static boolean[] buttons = new boolean[5];

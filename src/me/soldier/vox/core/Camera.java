@@ -4,9 +4,7 @@ import me.soldier.math.Vector3f;
 import me.soldier.math.ViewMatrix;
 
 /**
- * @author Osoldier
- * @since 28 janv. 2015
- * @project Galaxy
+ * Created by Thomas on 19 janv. 2016
  */
 public class Camera {
 
