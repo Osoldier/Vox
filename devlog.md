@@ -18,6 +18,9 @@ Continuing to optimize the rendering process, i'm trying to merge all vertices /
 => merged data successfully ! The loading time and rendering delay is reduced. => {~1600 fps on desktop, ~250 fps on mac book air}\
 Implemented a procedural terrain generation
 
-## 23.01.16 [13h-]
+## 23.01.16 [11h-16]
 Fixed an error in the mesher limiting it to a squared chunk.
 Now that the "backend" is all done, i have trouble knowing what features i should implement
+
+## 24.01.16 [20h-22h]
+Added a console for user interaction, started to add commands

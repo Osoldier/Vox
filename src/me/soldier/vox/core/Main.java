@@ -101,6 +101,7 @@ public class Main
 			if (glfwWindowShouldClose(window) == GL_TRUE)
 				running = false;
 		}
+		engine.CleanUp();
 		keyCallback.release();
 		sizeCallback.release();
 		mouseCallback.release();
