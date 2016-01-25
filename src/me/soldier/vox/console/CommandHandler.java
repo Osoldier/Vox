@@ -2,6 +2,7 @@ package me.soldier.vox.console;
 
 import java.util.*;
 
+import me.soldier.vox.console.commands.*;
 import me.soldier.vox.core.*;
 
 /**
@@ -10,11 +11,14 @@ import me.soldier.vox.core.*;
 public class CommandHandler
 {
 	private List<Command> commands;
+	private Engine engine;
 
 	public CommandHandler(Engine e)
 	{
 		commands = new ArrayList<Command>();
-		commands.add(new GenerateCommand(e));
+		commands.add(new GenerateCommand());
+		commands.add(new GiveCommand());
+		this.engine = e;
 	}
 
 	public String OnCommandIssued(String line)
@@ -26,7 +30,7 @@ public class CommandHandler
 		{
 			if (c.getName().equalsIgnoreCase(cmd))
 			{
-				return c.execute(args);
+				return c.execute(args, engine);
 			}
 		}
 		return "Command not found";

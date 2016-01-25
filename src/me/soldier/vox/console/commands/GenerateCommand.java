@@ -1,5 +1,6 @@
-package me.soldier.vox.console;
+package me.soldier.vox.console.commands;
 
+import me.soldier.vox.console.*;
 import me.soldier.vox.core.*;
 import me.soldier.vox.voxels.*;
 
@@ -9,11 +10,9 @@ import me.soldier.vox.voxels.*;
 public class GenerateCommand extends Command
 {
 	
-	private Engine e;
 	
-	public GenerateCommand(Engine e)
+	public GenerateCommand()
 	{
-		this.e = e;
 		this.setName("generate");
 	}
 
@@ -24,7 +23,7 @@ public class GenerateCommand extends Command
 	}
 
 	@Override
-	public String execute(String[] args)
+	public String execute(String[] args, final Engine e)
 	{
 		if(args != null && args.length >= 2) {
 			final int width, height;
@@ -40,7 +39,7 @@ public class GenerateCommand extends Command
 					}
 				});
 				return width+" x "+height+" world generated !";
-			} catch (NumberFormatException e){
+			} catch (NumberFormatException e1){
 				//No code
 			}
 		}

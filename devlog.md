@@ -24,3 +24,6 @@ Now that the "backend" is all done, i have trouble knowing what features i shoul
 
 ## 24.01.16 [20h-22h]
 Added a console for user interaction, started to add commands
+
+## 24.01.16 [21h-22h]
+Added the "give" command which will allow me to implement the adding/removing of blocks later on

@@ -22,6 +22,7 @@ public class Engine
 	private RayCaster rayCaster;
 	private Renderer renderer;
 	private World world;
+	private VoxelType inHand;
 	private FrmConsole console;
 	private BlockingQueue<Runnable> todoList;
 
@@ -44,7 +45,7 @@ public class Engine
 	public static DoubleBuffer x = BufferUtils.createDoubleBuffer(1);
 	public static DoubleBuffer y = BufferUtils.createDoubleBuffer(1);
 	double newX, newY, prevX, prevY;
-	private float speed = 1f;
+	private float speed = 2f;
 
 	public void Update()
 	{
@@ -149,5 +150,15 @@ public class Engine
 	public void setTodoList(BlockingQueue<Runnable> todoList)
 	{
 		this.todoList = todoList;
+	}
+
+	public VoxelType getInHand()
+	{
+		return inHand;
+	}
+
+	public void setInHand(VoxelType inHand)
+	{
+		this.inHand = inHand;
 	}
 }
