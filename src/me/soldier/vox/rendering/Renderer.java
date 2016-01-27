@@ -20,9 +20,9 @@ public class Renderer
 		voxelRenderer = new VoxelRenderer();
 	}
 
-	public void RenderScene(World w, Camera pov)
+	public void RenderScene(World w, Camera pov, boolean wireframe)
 	{
-		voxelRenderer.Prepare(w, pov.vw_matrix, perspective);
+		voxelRenderer.Prepare(w, pov.vw_matrix, perspective, wireframe);
 		for (int x = 0; x < w.getChunks().length; x++)
 		{
 			for (int z = 0; z < w.getChunks()[x].length; z++)

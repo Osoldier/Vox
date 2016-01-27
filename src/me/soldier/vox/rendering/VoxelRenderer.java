@@ -20,10 +20,15 @@ public class VoxelRenderer
 		shader = new VoxelShader();
 	}
 
-	public void Prepare(World w, ViewMatrix pov, ProjectionMatrix proj)
+	public void Prepare(World w, ViewMatrix pov, ProjectionMatrix proj, boolean wireframe)
 	{
-		// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glEnable(GL_CULL_FACE);
+		if (!wireframe)
+		{
+			glEnable(GL_CULL_FACE);
+		} else {
+			glDisable(GL_CULL_FACE);
+		}
+		glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
 		// Set shader variables
 		shader.setSun(w.getSun());
 		shader.setVwMat(pov);

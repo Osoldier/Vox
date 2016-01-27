@@ -22,14 +22,15 @@ public class Engine
 	private RayCaster rayCaster;
 	private Renderer renderer;
 	private World world;
-	private VoxelType inHand;
+	private VoxelType inHand = VoxelType.STONE;
 	private FrmConsole console;
 	private BlockingQueue<Runnable> todoList;
+	private boolean wireframe = false;
 
 	public Engine()
 	{
 		renderer = new Renderer(Main.pix_width, Main.pix_height);
-		pov = new Camera(1920, 200, 1920);
+		pov = new Camera(0, 0, 0);
 		this.rayCaster = new RayCaster(renderer.getPerspective(), pov.vw_matrix);
 		setTodoList(new LinkedBlockingQueue<Runnable>());
 		console = new FrmConsole(this);
@@ -39,7 +40,7 @@ public class Engine
 	{
 		pov.lookThrough();
 		if (world != null)
-			renderer.RenderScene(world, pov);
+			renderer.RenderScene(world, pov, wireframe);
 	}
 
 	public static DoubleBuffer x = BufferUtils.createDoubleBuffer(1);
@@ -61,6 +62,8 @@ public class Engine
 		}
 		glfwGetCursorPos(Main.window, x, y);
 		rayCaster.Cast((float) x.get(0), (float) y.get(0));
+		if (world != null)
+			world.Update(rayCaster, pov.position);
 		if (Input.isKeyDown(GLFW_KEY_W) || Input.isKeyDown(GLFW_KEY_Z))
 		{
 			pov.Forward(speed);
@@ -111,7 +114,7 @@ public class Engine
 	{
 		console.dispose();
 	}
-	
+
 	public Camera getPov()
 	{
 		return pov;

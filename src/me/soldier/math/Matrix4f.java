@@ -11,10 +11,10 @@ public class Matrix4f
 	public static final int SIZE = 4 * 4;
 	/** [column + line * 4] */
 	public float[] elements = new float[SIZE];
-	private static int m00 = 0, m01 = 1, m02 = 2, m03 = 3;
-	private static int m10 = 4, m11 = 5, m12 = 6, m13 = 7;
-	private static int m20 = 8, m21 = 9, m22 = 10, m23 = 11;
-	private static int m30 = 12, m31 = 13, m32 = 14, m33 = 15;
+	private static int m00 = 0, m10 = 1, m20 = 2, m30 = 3;
+	private static int m01 = 4, m11 = 5, m21 = 6, m31 = 7;
+	private static int m02 = 8, m12 = 9, m22 = 10, m32 = 11;
+	private static int m03 = 12, m13 = 13, m23 = 14, m33 = 15;
 
 	public Matrix4f()
 	{
@@ -148,41 +148,25 @@ public class Matrix4f
 			float determinant_inv = 1f / determinant;
 
 			// first row
-			float t00 = determinant3x3(src.elements[m11], src.elements[m12], src.elements[m13], src.elements[m21],
-					src.elements[m22], src.elements[m23], src.elements[m31], src.elements[m32], src.elements[m33]);
-			float t01 = -determinant3x3(src.elements[m10], src.elements[m12], src.elements[m13], src.elements[m20],
-					src.elements[m22], src.elements[m23], src.elements[m30], src.elements[m32], src.elements[m33]);
-			float t02 = determinant3x3(src.elements[m10], src.elements[m11], src.elements[m13], src.elements[m20],
-					src.elements[m21], src.elements[m23], src.elements[m30], src.elements[m31], src.elements[m33]);
-			float t03 = -determinant3x3(src.elements[m10], src.elements[m11], src.elements[m12], src.elements[m20],
-					src.elements[m21], src.elements[m22], src.elements[m30], src.elements[m31], src.elements[m32]);
+			float t00 = determinant3x3(src.elements[m11], src.elements[m12], src.elements[m13], src.elements[m21], src.elements[m22], src.elements[m23], src.elements[m31], src.elements[m32], src.elements[m33]);
+			float t01 = -determinant3x3(src.elements[m10], src.elements[m12], src.elements[m13], src.elements[m20], src.elements[m22], src.elements[m23], src.elements[m30], src.elements[m32], src.elements[m33]);
+			float t02 = determinant3x3(src.elements[m10], src.elements[m11], src.elements[m13], src.elements[m20], src.elements[m21], src.elements[m23], src.elements[m30], src.elements[m31], src.elements[m33]);
+			float t03 = -determinant3x3(src.elements[m10], src.elements[m11], src.elements[m12], src.elements[m20], src.elements[m21], src.elements[m22], src.elements[m30], src.elements[m31], src.elements[m32]);
 			// second row
-			float t10 = -determinant3x3(src.elements[m01], src.elements[m02], src.elements[m03], src.elements[m21],
-					src.elements[m22], src.elements[m23], src.elements[m31], src.elements[m32], src.elements[m33]);
-			float t11 = determinant3x3(src.elements[m00], src.elements[m02], src.elements[m03], src.elements[m20],
-					src.elements[m22], src.elements[m23], src.elements[m30], src.elements[m32], src.elements[m33]);
-			float t12 = -determinant3x3(src.elements[m00], src.elements[m01], src.elements[m03], src.elements[m20],
-					src.elements[m21], src.elements[m23], src.elements[m30], src.elements[m31], src.elements[m33]);
-			float t13 = determinant3x3(src.elements[m00], src.elements[m01], src.elements[m02], src.elements[m20],
-					src.elements[m21], src.elements[m22], src.elements[m30], src.elements[m31], src.elements[m32]);
+			float t10 = -determinant3x3(src.elements[m01], src.elements[m02], src.elements[m03], src.elements[m21], src.elements[m22], src.elements[m23], src.elements[m31], src.elements[m32], src.elements[m33]);
+			float t11 = determinant3x3(src.elements[m00], src.elements[m02], src.elements[m03], src.elements[m20], src.elements[m22], src.elements[m23], src.elements[m30], src.elements[m32], src.elements[m33]);
+			float t12 = -determinant3x3(src.elements[m00], src.elements[m01], src.elements[m03], src.elements[m20], src.elements[m21], src.elements[m23], src.elements[m30], src.elements[m31], src.elements[m33]);
+			float t13 = determinant3x3(src.elements[m00], src.elements[m01], src.elements[m02], src.elements[m20], src.elements[m21], src.elements[m22], src.elements[m30], src.elements[m31], src.elements[m32]);
 			// third row
-			float t20 = determinant3x3(src.elements[m01], src.elements[m02], src.elements[m03], src.elements[m11],
-					src.elements[m12], src.elements[m13], src.elements[m31], src.elements[m32], src.elements[m33]);
-			float t21 = -determinant3x3(src.elements[m00], src.elements[m02], src.elements[m03], src.elements[m10],
-					src.elements[m12], src.elements[m13], src.elements[m30], src.elements[m32], src.elements[m33]);
-			float t22 = determinant3x3(src.elements[m00], src.elements[m01], src.elements[m03], src.elements[m10],
-					src.elements[m11], src.elements[m13], src.elements[m30], src.elements[m31], src.elements[m33]);
-			float t23 = -determinant3x3(src.elements[m00], src.elements[m01], src.elements[m02], src.elements[m10],
-					src.elements[m11], src.elements[m12], src.elements[m30], src.elements[m31], src.elements[m32]);
+			float t20 = determinant3x3(src.elements[m01], src.elements[m02], src.elements[m03], src.elements[m11], src.elements[m12], src.elements[m13], src.elements[m31], src.elements[m32], src.elements[m33]);
+			float t21 = -determinant3x3(src.elements[m00], src.elements[m02], src.elements[m03], src.elements[m10], src.elements[m12], src.elements[m13], src.elements[m30], src.elements[m32], src.elements[m33]);
+			float t22 = determinant3x3(src.elements[m00], src.elements[m01], src.elements[m03], src.elements[m10], src.elements[m11], src.elements[m13], src.elements[m30], src.elements[m31], src.elements[m33]);
+			float t23 = -determinant3x3(src.elements[m00], src.elements[m01], src.elements[m02], src.elements[m10], src.elements[m11], src.elements[m12], src.elements[m30], src.elements[m31], src.elements[m32]);
 			// fourth row
-			float t30 = -determinant3x3(src.elements[m01], src.elements[m02], src.elements[m03], src.elements[m11],
-					src.elements[m12], src.elements[m13], src.elements[m21], src.elements[m22], src.elements[m23]);
-			float t31 = determinant3x3(src.elements[m00], src.elements[m02], src.elements[m03], src.elements[m10],
-					src.elements[m12], src.elements[m13], src.elements[m20], src.elements[m22], src.elements[m23]);
-			float t32 = -determinant3x3(src.elements[m00], src.elements[m01], src.elements[m03], src.elements[m10],
-					src.elements[m11], src.elements[m13], src.elements[m20], src.elements[m21], src.elements[m23]);
-			float t33 = determinant3x3(src.elements[m00], src.elements[m01], src.elements[m02], src.elements[m10],
-					src.elements[m11], src.elements[m12], src.elements[m20], src.elements[m21], src.elements[m22]);
+			float t30 = -determinant3x3(src.elements[m01], src.elements[m02], src.elements[m03], src.elements[m11], src.elements[m12], src.elements[m13], src.elements[m21], src.elements[m22], src.elements[m23]);
+			float t31 = determinant3x3(src.elements[m00], src.elements[m02], src.elements[m03], src.elements[m10], src.elements[m12], src.elements[m13], src.elements[m20], src.elements[m22], src.elements[m23]);
+			float t32 = -determinant3x3(src.elements[m00], src.elements[m01], src.elements[m03], src.elements[m10], src.elements[m11], src.elements[m13], src.elements[m20], src.elements[m21], src.elements[m23]);
+			float t33 = determinant3x3(src.elements[m00], src.elements[m01], src.elements[m02], src.elements[m10], src.elements[m11], src.elements[m12], src.elements[m20], src.elements[m21], src.elements[m22]);
 
 			// transpose and divide by the determinant
 			dest.elements[m00] = t00 * determinant_inv;
@@ -206,8 +190,7 @@ public class Matrix4f
 			return null;
 	}
 
-	private static float determinant3x3(float t00, float t01, float t02, float t10, float t11, float t12, float t20,
-			float t21, float t22)
+	private static float determinant3x3(float t00, float t01, float t02, float t10, float t11, float t12, float t20, float t21, float t22)
 	{
 		return t00 * (t11 * t22 - t12 * t21)
 				+ t01 * (t12 * t20 - t10 * t22)
@@ -217,26 +200,22 @@ public class Matrix4f
 	public float determinant()
 	{
 		float f = elements[m00]
-				* ((elements[m11] * elements[m22] * elements[m33] + elements[m12] * elements[m23] * elements[m31]
-						+ elements[m13] * elements[m21] * elements[m32])
+				* ((elements[m11] * elements[m22] * elements[m33] + elements[m12] * elements[m23] * elements[m31] + elements[m13] * elements[m21] * elements[m32])
 						- elements[m13] * elements[m22] * elements[m31]
 						- elements[m11] * elements[m23] * elements[m32]
 						- elements[m12] * elements[m21] * elements[m33]);
 		f -= elements[m01]
-				* ((elements[m10] * elements[m22] * elements[m33] + elements[m12] * elements[m23] * elements[m30]
-						+ elements[m13] * elements[m20] * elements[m32])
+				* ((elements[m10] * elements[m22] * elements[m33] + elements[m12] * elements[m23] * elements[m30] + elements[m13] * elements[m20] * elements[m32])
 						- elements[m13] * elements[m22] * elements[m30]
 						- elements[m10] * elements[m23] * elements[m32]
 						- elements[m12] * elements[m20] * elements[m33]);
 		f += elements[m02]
-				* ((elements[m10] * elements[m21] * elements[m33] + elements[m11] * elements[m23] * elements[m30]
-						+ elements[m13] * elements[m20] * elements[m31])
+				* ((elements[m10] * elements[m21] * elements[m33] + elements[m11] * elements[m23] * elements[m30] + elements[m13] * elements[m20] * elements[m31])
 						- elements[m13] * elements[m21] * elements[m30]
 						- elements[m10] * elements[m23] * elements[m31]
 						- elements[m11] * elements[m20] * elements[m33]);
 		f -= elements[m03]
-				* ((elements[m10] * elements[m21] * elements[m32] + elements[m11] * elements[m22] * elements[m30]
-						+ elements[m12] * elements[m20] * elements[m31])
+				* ((elements[m10] * elements[m21] * elements[m32] + elements[m11] * elements[m22] * elements[m30] + elements[m12] * elements[m20] * elements[m31])
 						- elements[m12] * elements[m21] * elements[m30]
 						- elements[m10] * elements[m22] * elements[m31]
 						- elements[m11] * elements[m20] * elements[m32]);
@@ -265,18 +244,15 @@ public class Matrix4f
 		return dest;
 	}
 
-	@Override
-	public String toString()
-	{
-		StringBuilder buf = new StringBuilder();
-		for (int i = 0; i < elements.length; i++)
-		{
-			buf.append(elements[i] + " ");
-			if ((i + 1) % 4 == 0)
-				buf.append("\n");
-		}
+	public String toString() {
+		StringBuffer buf = new StringBuffer();
+		buf.append(elements[m00]).append(' ').append(elements[m10]).append(' ').append(elements[m20]).append(' ').append(elements[m30]).append('\n');
+		buf.append(elements[m01]).append(' ').append(elements[m11]).append(' ').append(elements[m21]).append(' ').append(elements[m31]).append('\n');
+		buf.append(elements[m02]).append(' ').append(elements[m12]).append(' ').append(elements[m22]).append(' ').append(elements[m32]).append('\n');
+		buf.append(elements[m03]).append(' ').append(elements[m13]).append(' ').append(elements[m23]).append(' ').append(elements[m33]).append('\n');
 		return buf.toString();
 	}
+
 
 	public FloatBuffer toFloatBuffer()
 	{
