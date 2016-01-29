@@ -18,6 +18,9 @@ public class CommandHandler
 		commands = new ArrayList<Command>();
 		commands.add(new GenerateCommand());
 		commands.add(new GiveCommand());
+		commands.add(new SaveCommand());
+		commands.add(new LoadCommand());
+		commands.add(new WireframeCommand());
 		this.engine = e;
 	}
 

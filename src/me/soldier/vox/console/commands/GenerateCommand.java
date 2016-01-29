@@ -1,5 +1,7 @@
 package me.soldier.vox.console.commands;
 
+import java.util.Random;
+
 import me.soldier.vox.console.*;
 import me.soldier.vox.core.*;
 import me.soldier.vox.voxels.*;
@@ -8,9 +10,7 @@ import me.soldier.vox.voxels.*;
  * Created by Thomas on 24 janv. 2016
  */
 public class GenerateCommand extends Command
-{
-	
-	
+{	
 	public GenerateCommand()
 	{
 		this.setName("generate");
@@ -35,7 +35,7 @@ public class GenerateCommand extends Command
 				{
 					public void run()
 					{
-						e.setWorld(new World(width, height));
+						e.setWorld(new World(width, height, new Random().nextLong()));
 					}
 				});
 				return width+" x "+height+" world generated !";

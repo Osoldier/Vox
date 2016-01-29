@@ -1,16 +1,19 @@
 package me.soldier.util;
 
+import java.util.Random;
+
 /**
  * Created by Thomas on 23 janv. 2016
  */
 public class Noise
 {
-	public static double[] perlinNoise(int width, int height, double exponent)
+	public static double[] perlinNoise(int width, int height, double exponent, long seed)
 	{
+		Random rand = new Random(seed);
 		int[] p = new int[width * height];
 		double[] result = new double[width * height];
 		for (int i = 0; i < p.length / 2; i++)
-			p[i] = p[i + p.length / 2] = (int) (Math.random() * p.length / 2);// permutation[i];
+			p[i] = p[i + p.length / 2] = (int) (rand.nextDouble() * p.length / 2);// permutation[i];
 
 		for (int i = 0; i < width; i++)
 		{

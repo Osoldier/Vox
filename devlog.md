@@ -28,5 +28,11 @@ Added a console for user interaction, started to add commands
 ## 25.01.16 [21h-22h]
 Added the "give" command which will allow me to implement the adding/removing of blocks later on
 
-## 27.01.16 [20h-22h]
+## 27.01.16 [20h-23h]
 Fixed the mouse picker and started to set up for block adding/removing (actually implemented removing block)
+
+## 28.01.16 [20h-21h]
+In the train, started to implement file saving/loading
+
+## 29.01.16 [15h-]
+Continuing to implement saving/loading

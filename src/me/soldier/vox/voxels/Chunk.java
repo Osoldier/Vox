@@ -1,5 +1,8 @@
 package me.soldier.vox.voxels;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import me.soldier.graphics.*;
 import me.soldier.math.*;
 import me.soldier.util.*;
@@ -12,9 +15,11 @@ public class Chunk
 	public static final int CHUNK_SIZE = 8;
 	private Voxel[][][] voxels = new Voxel[CHUNK_SIZE][World.WORLD_HEIGHT][CHUNK_SIZE];
 	private Model mesh;
-
+	private List<Voxel> modified;
+	
 	public Chunk()
 	{
+		modified = new LinkedList<Voxel>();
 		for (int x = 0; x < voxels.length; x++)
 		{
 			for (int y = 0; y < voxels[x].length; y++)
@@ -111,6 +116,11 @@ public class Chunk
 	{
 		return voxels[x][y][z];
 	}
+	
+	public void setAt(int x, int y, int z, VoxelType type)
+	{
+		voxels[x][y][z].setType(type);
+	}
 
 	public Voxel[][][] getVoxels()
 	{
@@ -130,6 +140,22 @@ public class Chunk
 	public void setMesh(Model mesh)
 	{
 		this.mesh = mesh;
+	}
+
+	/**
+	 * @return the modified
+	 */
+	public List<Voxel> getModified()
+	{
+		return modified;
+	}
+
+	/**
+	 * @param modified the modified to set
+	 */
+	public void setModified(List<Voxel> modified)
+	{
+		this.modified = modified;
 	}
 
 }
