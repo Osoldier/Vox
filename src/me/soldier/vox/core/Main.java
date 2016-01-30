@@ -28,7 +28,8 @@ public class Main
 	private GLFWKeyCallback keyCallback;
 	private GLFWWindowSizeCallback sizeCallback;
 	private GLFWMouseButtonCallback mouseCallback;
-
+	private GLFWWindowFocusCallback focusCallback;
+	
 	private Engine engine;
 
 	public void start()
@@ -47,6 +48,7 @@ public class Main
 		}
 
 		glfwWindowHint(GLFW_SAMPLES, 4);
+		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 		OSCompatibility.GLFWSpecifics();
 		window = glfwCreateWindow(width, height, "Voxel Engine", NULL, NULL);
 		if (window == NULL)
@@ -105,6 +107,7 @@ public class Main
 		keyCallback.release();
 		sizeCallback.release();
 		mouseCallback.release();
+		focusCallback.release();
 		glfwDestroyWindow(window);
 		glfwTerminate();
 	}
@@ -144,6 +147,7 @@ public class Main
 		glfwSetKeyCallback(window, keyCallback = new Input());
 		glfwSetWindowSizeCallback(window, sizeCallback = new ResizeHandler());
 		glfwSetMouseButtonCallback(window, mouseCallback = new MouseHandler());
+		glfwSetWindowFocusCallback(window, focusCallback = new FocusCallback());
 		
 		glfwMakeContextCurrent(window);
 		glfwSwapInterval(0);

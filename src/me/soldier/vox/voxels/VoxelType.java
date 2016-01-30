@@ -17,7 +17,7 @@ public enum VoxelType
 	{
 		this.id = (short)id;
 		this.color = color;
-		this.resistance = resistance;
+		this.resistance = resistance*5;
 	}
 
 	public static VoxelType getbyID(int id)

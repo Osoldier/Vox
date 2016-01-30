@@ -11,6 +11,7 @@ public class Voxel
 	private VoxelType type;
 	private boolean visible = true, opaque = true;
 	private Vector3f color;
+	private int resistance;
 	
 	public Voxel()
 	{
@@ -36,6 +37,7 @@ public class Voxel
 		this.type = type;
 		setOpaque(type != VoxelType.AIR);
 		this.setColor(type.getColor());
+		this.setResistance(type.resistance);
 	}
 
 	public boolean isVisible()
@@ -66,5 +68,21 @@ public class Voxel
 	public void setColor(Vector3f color)
 	{
 		this.color = color;
+	}
+
+	/**
+	 * @return the resistance
+	 */
+	public int getResistance()
+	{
+		return resistance;
+	}
+
+	/**
+	 * @param resistance the resistance to set
+	 */
+	public void setResistance(int resistance)
+	{
+		this.resistance = resistance;
 	}
 }

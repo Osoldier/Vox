@@ -2,6 +2,7 @@ package me.soldier.vox.rendering;
 
 import me.soldier.math.ProjectionMatrix;
 import me.soldier.vox.core.Camera;
+import me.soldier.vox.ui.UIElement;
 import me.soldier.vox.voxels.World;
 
 /**
@@ -11,13 +12,16 @@ public class Renderer
 {
 	private final float fov = 70f, znear = 0.1f, zfar = 10000f;
 	private ProjectionMatrix perspective, orthographic;
+	
 	private VoxelRenderer voxelRenderer;
-
+	private UIRenderer uiRenderer;
+	
 	public Renderer(int width, int height)
 	{
 		this.perspective = new ProjectionMatrix(fov, (float) width / (float) height, znear, zfar);
-		this.orthographic = new ProjectionMatrix(0, width, height, 0, -1, 1);
-		voxelRenderer = new VoxelRenderer();
+		this.orthographic = new ProjectionMatrix(0, width, height, 0, 0, 1);
+		this.voxelRenderer = new VoxelRenderer();
+		this.uiRenderer = new UIRenderer();
 	}
 
 	public void RenderScene(World w, Camera pov, boolean wireframe)
@@ -31,6 +35,10 @@ public class Renderer
 			}
 		}
 		voxelRenderer.Clean();
+	}
+	
+	public void RenderUI(UIElement element) {
+		uiRenderer.render(orthographic, element);
 	}
 
 	public ProjectionMatrix getPerspective()

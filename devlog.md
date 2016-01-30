@@ -34,5 +34,8 @@ Fixed the mouse picker and started to set up for block adding/removing (actually
 ## 28.01.16 [20h-21h]
 In the train, started to implement file saving/loading
 
-## 29.01.16 [15h-]
-Continuing to implement saving/loading
+## 29.01.16 [15h-23h]
+Continuing to implement saving/loading, and done!
+
+## 30.01.16 [18h-20h30]
+Added UI, changed controls a bit

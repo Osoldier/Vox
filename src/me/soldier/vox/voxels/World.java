@@ -12,9 +12,9 @@ import me.soldier.vox.core.MouseHandler;
  */
 public class World
 {
+	public static int WORLD_HEIGHT = 256;
 	private Chunk[][] chunks;
 	private int width, depth;
-	public static int WORLD_HEIGHT = 256;
 	private Light sun;
 	private long seed;
 
@@ -23,7 +23,7 @@ public class World
 		this.width = w;
 		this.depth = d;
 		this.seed = seed;
-		double[] noiseMap = Noise.perlinNoise(w * Chunk.CHUNK_SIZE, d * Chunk.CHUNK_SIZE, 10, seed);
+		double[] noiseMap = Noise.perlinNoise(w * Chunk.CHUNK_SIZE, d * Chunk.CHUNK_SIZE, (w+1)/2, seed);
 		chunks = new Chunk[w][d];
 		long time = System.currentTimeMillis();
 		setSun(new Light(new Vector3f(0, 4096, 0), Vector3f.oneVec));
@@ -53,13 +53,16 @@ public class World
 					break outerloop;
 			}
 		}
-		if (current != null && MouseHandler.isButtonDown(1))
+		if (current != null && MouseHandler.isButtonDown(0))
 		{
-			if(!chunk.getModified().contains(current))
-				chunk.getModified().add(current);
-			current.setType(VoxelType.AIR);
-			chunk.cull();
-			chunk.setMesh(Mesher.Greedy(chunk));
+			current.setResistance(current.getResistance()-1);
+			if(current.getResistance() <= 0) {
+				if(!chunk.getModified().contains(current))
+					chunk.getModified().add(current);
+				current.setType(VoxelType.AIR);
+				chunk.cull();
+				chunk.setMesh(Mesher.Greedy(chunk));
+			}
 		}
 	}
 

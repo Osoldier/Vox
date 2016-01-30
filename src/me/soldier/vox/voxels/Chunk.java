@@ -48,9 +48,8 @@ public class Chunk
 						if (rayCaster.collideWithVoxel(Vector3f.Add(offset, pso), Voxel.VOXEL_SIZE, origin))
 						{
 							//If no intersection has been detected yet, or if there's an intersection closer to the camera than the last one
-							//TODO verify accuracy 
 							Vector3f currentPos = new Vector3f(x, y, z);
-							if (intersected == null || (lastPos == null || Vector3f.Sub(origin, lastPos).length() > Vector3f.Sub(origin, currentPos).length()))
+							if (intersected == null || (lastPos == null || Vector3f.Sub(lastPos, origin).length() > Vector3f.Sub(currentPos, origin).length()))
 							{
 								intersected = voxels[x][y][z];
 								lastPos = currentPos;

@@ -8,9 +8,9 @@ import me.soldier.math.*;
  */
 public class VoxelShader extends Shader
 {
-	private static final String VERT_FILE = "src/res/shaders/voxel.vert";
-	private static final String GEO_FILE = "src/res/shaders/voxel.geo";
-	private static final String FRAG_FILE = "src/res/shaders/voxel.frag";
+	private static final String VERT_FILE = "src/res/shaders/voxel/voxel.vert";
+	private static final String GEO_FILE = "src/res/shaders/voxel/voxel.geo";
+	private static final String FRAG_FILE = "src/res/shaders/voxel/voxel.frag";
 	
 	//Uniform locations
 	private int vwMatLoc, prMatLoc, mlMatLoc, lightLoc;

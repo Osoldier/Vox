@@ -25,11 +25,12 @@ public class OGLUtil
 		return new Model(vaoID, indices.length);
 	}
 
-	public static int createQuadVAO(float[] pos)
+	public static int createUIVAO()
 	{
 		int vaoID = generateVAO();
-		setAttributeData(0, 2, pos);
-		setAttributeData(2, 2, new float[] { 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0 });
+		float[] data = new float[] { 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0 };
+		setAttributeData(0, 2, data);
+		setAttributeData(2, 2, data);
 		releaseVAO();
 		return vaoID;
 	}

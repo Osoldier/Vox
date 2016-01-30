@@ -22,13 +22,9 @@ public class VoxelRenderer
 
 	public void Prepare(World w, ViewMatrix pov, ProjectionMatrix proj, boolean wireframe)
 	{
-		if (!wireframe)
-		{
-			glEnable(GL_CULL_FACE);
-		} else {
-			glDisable(GL_CULL_FACE);
-		}
+		glEnable(GL_CULL_FACE);
 		glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
+		glDisable(GL_BLEND);
 		// Set shader variables
 		shader.setSun(w.getSun());
 		shader.setVwMat(pov);

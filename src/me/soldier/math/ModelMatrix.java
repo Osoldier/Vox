@@ -14,7 +14,6 @@ public class ModelMatrix extends Matrix4f
 	public void Transform(Vector3f position, float anglex, float angley, float anglez, Vector3f scale)
 	{
 		this.Identity();
-		this.translate(position);
 		if (anglex != 0)
 			this.Rotate(anglex, 1, 0, 0);
 		if (angley != 0)
@@ -22,6 +21,7 @@ public class ModelMatrix extends Matrix4f
 		if (anglez != 0)
 			this.Rotate(anglez, 0, 0, 1);
 		this.Scale(scale);
+		this.translate(position);
 	}
 
 	public void Rotate(float angle, float x, float y, float z)

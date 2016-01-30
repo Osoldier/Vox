@@ -1,14 +1,6 @@
 package me.soldier.vox.core;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_CONTROL;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT_SHIFT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_Q;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_S;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_Z;
-import static org.lwjgl.glfw.GLFW.glfwGetCursorPos;
+import static org.lwjgl.glfw.GLFW.*;
 
 import java.nio.DoubleBuffer;
 import java.util.concurrent.BlockingQueue;
@@ -19,6 +11,7 @@ import me.soldier.vox.console.FrmConsole;
 import me.soldier.vox.filemanager.FileLoader;
 import me.soldier.vox.filemanager.FileSaver;
 import me.soldier.vox.rendering.Renderer;
+import me.soldier.vox.ui.Crosshair;
 import me.soldier.vox.voxels.VoxelType;
 import me.soldier.vox.voxels.World;
 
@@ -34,15 +27,16 @@ public class Engine
 	private RayCaster rayCaster;
 	private Renderer renderer;
 	private World world;
-	
+
 	private VoxelType inHand = VoxelType.STONE;
 	private BlockingQueue<Runnable> todoList;
 	private boolean wireframe = false;
-	
-	private FrmConsole console;	
+	private Crosshair crosshair;
+
+	private FrmConsole console;
 	private FileSaver saver;
 	private FileLoader loader;
-	
+
 	public Engine()
 	{
 		this.renderer = new Renderer(Main.pix_width, Main.pix_height);
@@ -52,6 +46,7 @@ public class Engine
 		this.console = new FrmConsole(this);
 		this.saver = new FileSaver(this);
 		this.loader = new FileLoader(this);
+		this.crosshair = new Crosshair();
 	}
 
 	public void Render()
@@ -59,11 +54,12 @@ public class Engine
 		pov.lookThrough();
 		if (world != null)
 			renderer.RenderScene(world, pov, wireframe);
+		renderer.RenderUI(crosshair);
 	}
 
 	public static DoubleBuffer x = BufferUtils.createDoubleBuffer(1);
 	public static DoubleBuffer y = BufferUtils.createDoubleBuffer(1);
-	double newX, newY, prevX, prevY;
+	double newX, newY;
 	private float speed = 2f;
 
 	public void Update()
@@ -107,32 +103,26 @@ public class Engine
 			pov.Down(speed);
 		}
 
-		if (MouseHandler.isButtonDown(0))
+		if (!Input.isKeyDown(GLFW_KEY_LEFT_ALT) && FocusCallback.FOCUSED)
 		{
-			newX = x.get(0);
-			newY = y.get(0);
-
-			double deltaX = newX - prevX;
-			double deltaY = newY - prevY;
-
-			pov.yaw((float) (deltaX) * 0.1f);
-			pov.pitch((float) (deltaY) * 0.1f);
-
-			prevX = newX;
-			prevY = newY;
-		} else
-		{
-
-			prevX = x.get(0);
-			prevY = y.get(0);
+			glfwSetInputMode(Main.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+			double deltaX = x.get(0) - Main.width / 2;
+			double deltaY = y.get(0) - Main.height / 2;
+			pov.yaw((float) (-deltaX) * 0.1f);
+			pov.pitch((float) (-deltaY) * 0.1f);
+			glfwSetCursorPos(Main.window, Main.width / 2, Main.height / 2);
+		} else {
+			glfwSetInputMode(Main.window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 		}
 	}
-	
-	public void Save(String path, String name) {
+
+	public void Save(String path, String name)
+	{
 		saver.writeFile(path, name);
 	}
-	
-	public void Load(String path) {
+
+	public void Load(String path)
+	{
 		this.world = loader.loadFile(path);
 	}
 
