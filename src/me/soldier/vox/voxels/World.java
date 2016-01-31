@@ -23,7 +23,7 @@ public class World
 		this.width = w;
 		this.depth = d;
 		this.seed = seed;
-		double[] noiseMap = Noise.perlinNoise(w * Chunk.CHUNK_SIZE, d * Chunk.CHUNK_SIZE, (w+1)/2, seed);
+		double[] noiseMap = Noise.perlinNoise(w * Chunk.CHUNK_SIZE, d * Chunk.CHUNK_SIZE, (w + 1) / 2, seed);
 		chunks = new Chunk[w][d];
 		long time = System.currentTimeMillis();
 		setSun(new Light(new Vector3f(0, 4096, 0), Vector3f.oneVec));
@@ -42,22 +42,30 @@ public class World
 	{
 		Voxel current = null;
 		Chunk chunk = null;
+		Vector3f last = null;
 		int decal = Chunk.CHUNK_SIZE * Voxel.VOXEL_SIZE;
-		outerloop: for (int x = 0; x < width; x++)
+		for (int x = 0; x < width; x++)
 		{
 			for (int z = 0; z < depth; z++)
 			{
-				current = chunks[x][z].getIntersectedVoxel(rayCaster, origin, new Vector3f(x * decal, 0, z * decal));
-				chunk = chunks[x][z];
-				if(current != null)
-					break outerloop;
+				Vector3f chunkcenter = new Vector3f(x * Chunk.CHUNK_SIZE + Chunk.CHUNK_SIZE / 2, 0, z * Chunk.CHUNK_SIZE + Chunk.CHUNK_SIZE / 2);
+				if (current == null || last == null || Vector3f.Sub(last, origin).length() > Vector3f.Sub(chunkcenter, origin).length())
+				{
+					current = chunks[x][z].getIntersectedVoxel(rayCaster, origin, new Vector3f(x * decal, 0, z * decal));
+					chunk = chunks[x][z];
+					last = chunkcenter;
+				}
+				System.out.println(current);
+
 			}
 		}
+
 		if (current != null && MouseHandler.isButtonDown(0))
 		{
-			current.setResistance(current.getResistance()-1);
-			if(current.getResistance() <= 0) {
-				if(!chunk.getModified().contains(current))
+			current.setResistance(current.getResistance() - 1);
+			if (current.getResistance() <= 0)
+			{
+				if (!chunk.getModified().contains(current))
 					chunk.getModified().add(current);
 				current.setType(VoxelType.AIR);
 				chunk.cull();
@@ -80,28 +88,34 @@ public class World
 	{
 		this.sun = sun;
 	}
-	
-	public int getWidth() {
+
+	public int getWidth()
+	{
 		return width;
 	}
 
-	public void setWidth(int width) {
+	public void setWidth(int width)
+	{
 		this.width = width;
 	}
 
-	public int getDepth() {
+	public int getDepth()
+	{
 		return depth;
 	}
 
-	public void setDepth(int depth) {
+	public void setDepth(int depth)
+	{
 		this.depth = depth;
 	}
 
-	public long getSeed() {
+	public long getSeed()
+	{
 		return seed;
 	}
 
-	public void setSeed(long seed) {
+	public void setSeed(long seed)
+	{
 		this.seed = seed;
 	}
 }

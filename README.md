@@ -8,3 +8,4 @@
 - To save the world you're in type "save [savename]"
 - To load a world you've previously saved, type "load [savename]
 - World are saved in "C:\User\[you]\Vox\"
+- You can release the mouse pointer by holding ALT

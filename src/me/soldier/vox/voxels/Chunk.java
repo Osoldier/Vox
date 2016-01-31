@@ -44,15 +44,14 @@ public class Chunk
 				{
 					if (voxels[x][y][z].isOpaque() && voxels[x][y][z].isVisible())
 					{
-						Vector3f pso = new Vector3f(x * Voxel.VOXEL_SIZE+Voxel.VOXEL_SIZE/2, y * Voxel.VOXEL_SIZE+Voxel.VOXEL_SIZE/2, z * Voxel.VOXEL_SIZE+Voxel.VOXEL_SIZE/2);
-						if (rayCaster.collideWithVoxel(Vector3f.Add(offset, pso), Voxel.VOXEL_SIZE, origin))
+						Vector3f pos = new Vector3f(x * Voxel.VOXEL_SIZE+Voxel.VOXEL_SIZE/2, y * Voxel.VOXEL_SIZE+Voxel.VOXEL_SIZE/2, z * Voxel.VOXEL_SIZE+Voxel.VOXEL_SIZE/2);
+						if (rayCaster.collideWithVoxel(Vector3f.Add(offset, pos), Voxel.VOXEL_SIZE, origin))
 						{
 							//If no intersection has been detected yet, or if there's an intersection closer to the camera than the last one
-							Vector3f currentPos = new Vector3f(x, y, z);
-							if (intersected == null || (lastPos == null || Vector3f.Sub(lastPos, origin).length() > Vector3f.Sub(currentPos, origin).length()))
+							if (intersected == null || (lastPos == null || Vector3f.Sub(lastPos, origin).length() > Vector3f.Sub(pos, origin).length()))
 							{
 								intersected = voxels[x][y][z];
-								lastPos = currentPos;
+								lastPos = pos;
 							}
 						}
 					}
